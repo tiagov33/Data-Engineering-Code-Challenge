@@ -1,1 +1,2 @@
 2026-10-10 18:13:13,811 - __main__ - INFO - Config files loaded successfully.
+2026-10-10 20:49:36,580 - src.data_preparation - INFO - Loading data from data/sales_uuid.csv
