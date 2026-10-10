@@ -1,0 +1,10 @@
+{
+    "enriched_data": {
+        "path": "output/enriched_data",
+        "format": "parquet"
+    },
+    "revenue_insights": {
+        "path": "output/revenue_insights",
+        "format": "csv"
+    }
+}
