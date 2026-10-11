@@ -1,0 +1,17 @@
+# Ignore logs
+logs/
+*.log
+
+# Virtual environments
+venv/
+env/
+*.venv
+*.env
+
+# Ignore Python bytecode
+src/__pycache__
+tests/__pycache__
+*.py[cod]
+
+# Ignore Pytest cache
+.pytest_cache/
