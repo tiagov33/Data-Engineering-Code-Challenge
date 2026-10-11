@@ -40,9 +40,15 @@
             "transaction_date": {
                 "type": "date",
                 "description": "date of the transaction",
-                "formats": [
-                    "yyyy-MM-dd"
-                ],
+                "input_formats": [  
+                    "yyyy-MM-dd",  
+                    "yyyy/MM/dd",  
+                    "M/d/yyyy",  
+                    "dd-MM-yyyy",  
+                    "MMMM d, yyyy",  
+                    "d-MMM-yy"  
+                ],  
+                "output_format": "yyyy-MM-dd",
                 "constraints": {
                     "not_null": true
                 }
