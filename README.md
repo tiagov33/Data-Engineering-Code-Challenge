@@ -170,12 +170,6 @@ From the project root, with the virtual environment activated:
 python -m pytest  
 ```  
   
-Alternatively, on Windows without activation:  
-  
-```powershell  
-.\.venv310\Scripts\python.exe -m pytest  
-```  
-  
 The challenge requires [`chispa`](https://github.com/MrPowers/chispa) for PySpark tests. Java and a working Spark environment are required for tests that create Spark sessions.  
   
 See [`tests/README.md`](tests/README.md) for detailed test documentation.  
