@@ -1,0 +1,282 @@
+2026-10-10 18:13:13,811 - __main__ - INFO - Config files loaded successfully.
+2026-10-10 20:49:36,580 - src.data_preparation - INFO - Loading data from data/sales_uuid.csv
+2026-10-11 19:30:54,193 - src.data_preparation - INFO - Loading data from data/sales_uuid.csv
+2026-10-11 19:33:22,827 - src.data_preparation - INFO - Loading data from data/sales_uuid.csv
+2026-10-11 20:13:37,125 - src.pipeline - INFO - Processing table: sales
+2026-10-11 20:13:37,125 - src.data_preparation - INFO - Loading data from data/sales_uuid.csv
+2026-10-11 20:13:40,558 - src.data_preparation - INFO - Checking for missing values in table sales
+2026-10-11 20:13:41,199 - src.data_preparation - INFO - Missing values:
+[Row(transaction_id=0, store_id=0, product_id=0, quantity=0, transaction_date=0, price=0)]
+2026-10-11 20:13:41,199 - src.data_preparation - INFO - Checking for format inconsistencies in table sales
+2026-10-11 20:13:41,199 - src.data_preparation - INFO - Checking for empty strings in column transaction_id
+2026-10-11 20:13:41,199 - src.data_preparation - INFO - Checking for empty strings in column store_id
+2026-10-11 20:13:41,199 - src.data_preparation - INFO - Checking for empty strings in column product_id
+2026-10-11 20:13:41,215 - src.data_preparation - INFO - Checking for invalid integer values in column quantity
+2026-10-11 20:13:41,247 - src.data_preparation - INFO - Checking raw dates in column transaction_date against output format: yyyy-MM-dd
+2026-10-11 20:13:41,263 - src.data_preparation - INFO - Checking for invalid float values in column price
+2026-10-11 20:13:41,561 - src.data_preparation - INFO - Format inconsistencies:
+[Row(transaction_id=0, store_id=0, product_id=0, quantity=0, transaction_date=160, price=0)]
+2026-10-11 20:13:41,561 - src.data_preparation - INFO - Enforcing data types for table sales
+2026-10-11 20:13:41,561 - src.data_preparation - INFO - Enforcing data type for column transaction_id: string
+2026-10-11 20:13:41,563 - src.data_preparation - INFO - Enforcing not_null constraint on column transaction_id
+2026-10-11 20:13:41,577 - src.data_preparation - INFO - Enforcing not_empty constraint on column transaction_id
+2026-10-11 20:13:41,580 - src.data_preparation - INFO - Enforcing data type for column store_id: string
+2026-10-11 20:13:41,588 - src.data_preparation - INFO - Enforcing not_null constraint on column store_id
+2026-10-11 20:13:41,593 - src.data_preparation - INFO - Enforcing not_empty constraint on column store_id
+2026-10-11 20:13:41,601 - src.data_preparation - INFO - Enforcing data type for column product_id: string
+2026-10-11 20:13:41,601 - src.data_preparation - INFO - Enforcing not_null constraint on column product_id
+2026-10-11 20:13:41,612 - src.data_preparation - INFO - Enforcing not_empty constraint on column product_id
+2026-10-11 20:13:41,620 - src.data_preparation - INFO - Enforcing data type for column quantity: integer
+2026-10-11 20:13:41,628 - src.data_preparation - INFO - Enforcing not_null constraint on column quantity
+2026-10-11 20:13:41,635 - src.data_preparation - INFO - Enforcing min constraint on column quantity: 1
+2026-10-11 20:13:41,640 - src.data_preparation - INFO - Enforcing data type for column transaction_date: date
+2026-10-11 20:13:41,640 - src.data_preparation - INFO - Parsing date column transaction_date using formats: ['yyyy-MM-dd', 'yyyy/MM/dd', 'M/d/yyyy', 'dd-MM-yyyy', 'MMMM d, yyyy', 'd-MMM-yy']
+2026-10-11 20:13:41,671 - src.data_preparation - DEBUG - Schema after enforcing data type for column transaction_date: StructType([StructField('transaction_id', StringType(), True), StructField('store_id', StringType(), True), StructField('product_id', StringType(), True), StructField('quantity', IntegerType(), True), StructField('transaction_date', DateType(), True), StructField('price', StringType(), True)])
+2026-10-11 20:13:41,671 - src.data_preparation - INFO - Enforcing not_null constraint on column transaction_date
+2026-10-11 20:13:41,671 - src.data_preparation - INFO - Enforcing data type for column price: float
+2026-10-11 20:13:41,687 - src.data_preparation - INFO - Enforcing not_null constraint on column price
+2026-10-11 20:13:41,687 - src.data_preparation - INFO - Enforcing min constraint on column price: 0.0
+2026-10-11 20:13:41,699 - src.data_preparation - INFO - Handling duplicates in table sales
+2026-10-11 20:13:43,735 - src.data_preparation - INFO - Dropped 0 duplicate rows from table sales
+2026-10-11 20:13:43,735 - src.pipeline - INFO - Processing table: products
+2026-10-11 20:13:43,735 - src.data_preparation - INFO - Loading data from data/products_uuid.csv
+2026-10-11 20:13:43,862 - src.data_preparation - INFO - Checking for missing values in table products
+2026-10-11 20:13:44,011 - src.data_preparation - INFO - Missing values:
+[Row(product_id=0, product_name=0, category=0)]
+2026-10-11 20:13:44,011 - src.data_preparation - INFO - Checking for format inconsistencies in table products
+2026-10-11 20:13:44,011 - src.data_preparation - INFO - Checking for empty strings in column product_id
+2026-10-11 20:13:44,013 - src.data_preparation - INFO - Checking for empty strings in column product_name
+2026-10-11 20:13:44,020 - src.data_preparation - INFO - Checking for empty strings in column category
+2026-10-11 20:13:44,147 - src.data_preparation - INFO - Format inconsistencies:
+[Row(product_id=0, product_name=0, category=0)]
+2026-10-11 20:13:44,147 - src.data_preparation - INFO - Enforcing data types for table products
+2026-10-11 20:13:44,147 - src.data_preparation - INFO - Enforcing data type for column product_id: string
+2026-10-11 20:13:44,147 - src.data_preparation - INFO - Enforcing not_null constraint on column product_id
+2026-10-11 20:13:44,156 - src.data_preparation - INFO - Enforcing not_empty constraint on column product_id
+2026-10-11 20:13:44,161 - src.data_preparation - INFO - Enforcing data type for column product_name: string
+2026-10-11 20:13:44,166 - src.data_preparation - INFO - Enforcing data type for column category: string
+2026-10-11 20:13:44,173 - src.data_preparation - INFO - Handling duplicates in table products
+2026-10-11 20:13:44,932 - src.data_preparation - INFO - Dropped 0 duplicate rows from table products
+2026-10-11 20:13:44,932 - src.pipeline - INFO - Processing table: stores
+2026-10-11 20:13:44,932 - src.data_preparation - INFO - Loading data from data/stores_uuid.csv
+2026-10-11 20:13:45,056 - src.data_preparation - INFO - Checking for missing values in table stores
+2026-10-11 20:13:45,164 - src.data_preparation - INFO - Missing values:
+[Row(store_id=0, store_name=0, location=0)]
+2026-10-11 20:13:45,164 - src.data_preparation - INFO - Checking for format inconsistencies in table stores
+2026-10-11 20:13:45,164 - src.data_preparation - INFO - Checking for empty strings in column store_id
+2026-10-11 20:13:45,164 - src.data_preparation - INFO - Checking for empty strings in column store_name
+2026-10-11 20:13:45,164 - src.data_preparation - INFO - Checking for empty strings in column location
+2026-10-11 20:13:45,242 - src.data_preparation - INFO - Format inconsistencies:
+[Row(store_id=0, store_name=0, location=0)]
+2026-10-11 20:13:45,242 - src.data_preparation - INFO - Enforcing data types for table stores
+2026-10-11 20:13:45,242 - src.data_preparation - INFO - Enforcing data type for column store_id: string
+2026-10-11 20:13:45,258 - src.data_preparation - INFO - Enforcing not_null constraint on column store_id
+2026-10-11 20:13:45,262 - src.data_preparation - INFO - Enforcing not_empty constraint on column store_id
+2026-10-11 20:13:45,267 - src.data_preparation - INFO - Enforcing data type for column store_name: string
+2026-10-11 20:13:45,274 - src.data_preparation - INFO - Enforcing data type for column location: string
+2026-10-11 20:13:45,274 - src.data_preparation - INFO - Handling duplicates in table stores
+2026-10-11 20:13:45,723 - src.data_preparation - INFO - Dropped 0 duplicate rows from table stores
+2026-10-11 20:13:45,723 - src.data_transformation - INFO - Calculating total revenue for each store and product category
+2026-10-11 20:13:45,777 - src.data_transformation - INFO - Calculating total quantity sold for each product category, grouped by month
+2026-10-11 20:13:45,810 - src.data_transformation - INFO - Enriching data by combining sales, products, and stores datasets
+2026-10-11 20:13:45,840 - src.data_transformation - INFO - Adding price category to the enriched dataset
+2026-10-11 20:13:45,863 - src.data_export - INFO - Saving enriched dataset to output/enriched_data in Parquet format, partitioned by category and transaction_date
+2026-10-11 20:13:51,564 - src.data_export - INFO - Successfully wrote enriched dataset to output/enriched_data
+2026-10-11 20:13:51,564 - src.data_export - INFO - Saving store_id-level revenue insights to output/revenue_insights in CSV format
+2026-10-11 20:13:56,032 - src.data_export - INFO - Saving enriched dataset to output/enriched_data_with_price_category in Parquet format, partitioned by category and transaction_date
+2026-10-11 20:13:59,497 - src.data_export - INFO - Successfully wrote enriched dataset to output/enriched_data_with_price_category
+2026-10-11 20:13:59,497 - __main__ - INFO - Data processing pipeline completed successfully
+2026-10-12 10:02:53,142 - src.data_preparation - INFO - Loading data from C:\Users\VieiraT\AppData\Local\Temp\pytest-of-VieiraT\pytest-0\test_load_data_reads_csv_with_0\sales.csv
+2026-10-12 10:03:06,284 - src.data_preparation - INFO - Checking for missing values in table test_table
+2026-10-12 10:03:09,005 - src.data_preparation - INFO - Missing values:
+[Row(col1=1, col2=2, col3=1)]
+2026-10-12 10:03:11,448 - src.data_preparation - INFO - Checking for format inconsistencies in table test_table
+2026-10-12 10:03:11,449 - src.data_preparation - INFO - Checking for empty strings in column name
+2026-10-12 10:03:11,464 - src.data_preparation - INFO - Checking raw dates in column event_date against output format: yyyy-MM-dd
+2026-10-12 10:03:11,493 - src.data_preparation - INFO - Checking for invalid integer values in column quantity
+2026-10-12 10:03:11,527 - src.data_preparation - INFO - Checking for invalid float values in column price
+2026-10-12 10:03:14,081 - src.data_preparation - INFO - Format inconsistencies:
+[Row(name=2, event_date=3, quantity=2, price=2)]
+2026-10-12 10:03:16,220 - src.data_preparation - INFO - Handling duplicates in table sales
+2026-10-12 10:03:20,387 - src.data_preparation - INFO - Dropped 1 duplicate rows from table sales
+2026-10-12 10:03:26,733 - src.data_preparation - INFO - Handling duplicates in table test_table
+2026-10-12 10:03:30,911 - src.data_preparation - INFO - Dropped 1 duplicate rows from table test_table
+2026-10-12 10:03:36,900 - src.data_preparation - INFO - Enforcing not_null constraint on column value
+2026-10-12 10:03:44,502 - src.data_preparation - INFO - Enforcing not_empty constraint on column value
+2026-10-12 10:03:52,308 - src.data_preparation - INFO - Enforcing min constraint on column value: 1
+2026-10-12 10:04:26,694 - src.data_preparation - INFO - Loading data from C:\Users\VieiraT\AppData\Local\Temp\pytest-of-VieiraT\pytest-1\test_load_data_reads_csv_with_0\sales.csv
+2026-10-12 10:04:35,838 - src.data_preparation - INFO - Checking for missing values in table test_table
+2026-10-12 10:04:37,878 - src.data_preparation - INFO - Missing values:
+[Row(col1=1, col2=2, col3=1)]
+2026-10-12 10:04:39,948 - src.data_preparation - INFO - Checking for format inconsistencies in table test_table
+2026-10-12 10:04:39,948 - src.data_preparation - INFO - Checking for empty strings in column name
+2026-10-12 10:04:39,958 - src.data_preparation - INFO - Checking raw dates in column event_date against output format: yyyy-MM-dd
+2026-10-12 10:04:39,983 - src.data_preparation - INFO - Checking for invalid integer values in column quantity
+2026-10-12 10:04:40,010 - src.data_preparation - INFO - Checking for invalid float values in column price
+2026-10-12 10:04:42,091 - src.data_preparation - INFO - Format inconsistencies:
+[Row(name=2, event_date=3, quantity=2, price=2)]
+2026-10-12 10:04:44,314 - src.data_preparation - INFO - Handling duplicates in table sales
+2026-10-12 10:04:48,577 - src.data_preparation - INFO - Dropped 1 duplicate rows from table sales
+2026-10-12 10:04:55,103 - src.data_preparation - INFO - Handling duplicates in table test_table
+2026-10-12 10:04:59,648 - src.data_preparation - INFO - Dropped 1 duplicate rows from table test_table
+2026-10-12 10:05:05,796 - src.data_preparation - INFO - Enforcing not_null constraint on column value
+2026-10-12 10:05:13,406 - src.data_preparation - INFO - Enforcing not_empty constraint on column value
+2026-10-12 10:05:21,587 - src.data_preparation - INFO - Enforcing min constraint on column value: 1
+2026-10-12 10:05:29,688 - src.data_preparation - INFO - Enforcing data types for table sales
+2026-10-12 10:05:29,688 - src.data_preparation - INFO - Enforcing data type for column transaction_id: string
+2026-10-12 10:05:29,696 - src.data_preparation - INFO - Enforcing not_null constraint on column transaction_id
+2026-10-12 10:05:29,699 - src.data_preparation - INFO - Enforcing not_empty constraint on column transaction_id
+2026-10-12 10:05:29,708 - src.data_preparation - INFO - Enforcing data type for column quantity: integer
+2026-10-12 10:05:29,715 - src.data_preparation - INFO - Enforcing not_null constraint on column quantity
+2026-10-12 10:05:29,719 - src.data_preparation - INFO - Enforcing min constraint on column quantity: 1
+2026-10-12 10:05:29,725 - src.data_preparation - INFO - Enforcing data type for column transaction_date: date
+2026-10-12 10:05:29,725 - src.data_preparation - INFO - Parsing date column transaction_date using formats: ['yyyy-MM-dd', 'yyyy/MM/dd']
+2026-10-12 10:05:29,743 - src.data_preparation - DEBUG - Schema after enforcing data type for column transaction_date: StructType([StructField('transaction_id', StringType(), True), StructField('quantity', IntegerType(), True), StructField('transaction_date', DateType(), True), StructField('price', StringType(), True)])
+2026-10-12 10:05:29,743 - src.data_preparation - INFO - Enforcing not_null constraint on column transaction_date
+2026-10-12 10:05:29,748 - src.data_preparation - INFO - Enforcing data type for column price: float
+2026-10-12 10:05:29,756 - src.data_preparation - INFO - Enforcing not_null constraint on column price
+2026-10-12 10:05:29,760 - src.data_preparation - INFO - Enforcing min constraint on column price: 0.0
+2026-10-12 10:06:53,533 - src.data_transformation - INFO - Calculating total revenue for each store and product category
+2026-10-12 10:07:03,885 - src.data_transformation - INFO - Calculating total quantity sold for each product category, grouped by month
+2026-10-12 10:07:12,057 - src.data_transformation - INFO - Enriching data by combining sales, products, and stores datasets
+2026-10-12 10:07:22,019 - src.data_transformation - INFO - Adding price category to the enriched dataset
+2026-10-12 10:08:23,386 - src.data_export - INFO - Saving enriched dataset to C:\Users\VieiraT\AppData\Local\Temp\pytest-of-VieiraT\pytest-2\test_save_enriched_data_round_0\enriched_data in Parquet format, partitioned by category and transaction_date
+2026-10-12 10:08:27,447 - src.data_export - INFO - Successfully wrote enriched dataset to C:\Users\VieiraT\AppData\Local\Temp\pytest-of-VieiraT\pytest-2\test_save_enriched_data_round_0\enriched_data
+2026-10-12 10:08:32,799 - src.data_export - INFO - Saving enriched dataset to C:\Users\VieiraT\AppData\Local\Temp\pytest-of-VieiraT\pytest-2\test_save_enriched_data_round_0\enriched_data in Parquet format, partitioned by category and transaction_date
+2026-10-12 10:08:34,751 - src.data_export - INFO - Successfully wrote enriched dataset to C:\Users\VieiraT\AppData\Local\Temp\pytest-of-VieiraT\pytest-2\test_save_enriched_data_round_0\enriched_data
+2026-10-12 10:08:38,907 - src.data_export - INFO - Saving enriched dataset to C:\Users\VieiraT\AppData\Local\Temp\pytest-of-VieiraT\pytest-2\test_save_enriched_data_round_1\enriched_data in Parquet format, partitioned by category and transaction_date
+2026-10-12 10:08:40,891 - src.data_export - INFO - Successfully wrote enriched dataset to C:\Users\VieiraT\AppData\Local\Temp\pytest-of-VieiraT\pytest-2\test_save_enriched_data_round_1\enriched_data
+2026-10-12 10:08:45,177 - src.data_export - INFO - Saving enriched dataset to C:\Users\VieiraT\AppData\Local\Temp\pytest-of-VieiraT\pytest-2\test_save_enriched_data_round_1\enriched_data in Parquet format, partitioned by category and transaction_date
+2026-10-12 10:08:47,152 - src.data_export - INFO - Successfully wrote enriched dataset to C:\Users\VieiraT\AppData\Local\Temp\pytest-of-VieiraT\pytest-2\test_save_enriched_data_round_1\enriched_data
+2026-10-12 10:08:51,757 - src.data_export - INFO - Saving store_id-level revenue insights to C:\Users\VieiraT\AppData\Local\Temp\pytest-of-VieiraT\pytest-2\test_save_revenue_insights_csv0\revenue_insights in CSV format
+2026-10-12 10:08:59,626 - src.data_export - INFO - Saving store_id-level revenue insights to C:\Users\VieiraT\AppData\Local\Temp\pytest-of-VieiraT\pytest-2\test_save_revenue_insights_csv0\revenue_insights in CSV format
+2026-10-12 10:10:04,005 - src.data_export - INFO - Saving enriched dataset to C:\Users\VieiraT\AppData\Local\Temp\pytest-of-VieiraT\pytest-3\test_save_enriched_data_round_0\enriched_data in Parquet format, partitioned by category and transaction_date
+2026-10-12 10:10:08,111 - src.data_export - INFO - Successfully wrote enriched dataset to C:\Users\VieiraT\AppData\Local\Temp\pytest-of-VieiraT\pytest-3\test_save_enriched_data_round_0\enriched_data
+2026-10-12 10:10:13,281 - src.data_export - INFO - Saving enriched dataset to C:\Users\VieiraT\AppData\Local\Temp\pytest-of-VieiraT\pytest-3\test_save_enriched_data_round_0\enriched_data in Parquet format, partitioned by category and transaction_date
+2026-10-12 10:10:15,341 - src.data_export - INFO - Successfully wrote enriched dataset to C:\Users\VieiraT\AppData\Local\Temp\pytest-of-VieiraT\pytest-3\test_save_enriched_data_round_0\enriched_data
+2026-10-12 10:10:19,455 - src.data_export - INFO - Saving enriched dataset to C:\Users\VieiraT\AppData\Local\Temp\pytest-of-VieiraT\pytest-3\test_save_enriched_data_round_1\enriched_data in Parquet format, partitioned by category and transaction_date
+2026-10-12 10:10:21,381 - src.data_export - INFO - Successfully wrote enriched dataset to C:\Users\VieiraT\AppData\Local\Temp\pytest-of-VieiraT\pytest-3\test_save_enriched_data_round_1\enriched_data
+2026-10-12 10:10:25,583 - src.data_export - INFO - Saving enriched dataset to C:\Users\VieiraT\AppData\Local\Temp\pytest-of-VieiraT\pytest-3\test_save_enriched_data_round_1\enriched_data in Parquet format, partitioned by category and transaction_date
+2026-10-12 10:10:27,533 - src.data_export - INFO - Successfully wrote enriched dataset to C:\Users\VieiraT\AppData\Local\Temp\pytest-of-VieiraT\pytest-3\test_save_enriched_data_round_1\enriched_data
+2026-10-12 10:10:32,010 - src.data_export - INFO - Saving store_id-level revenue insights to C:\Users\VieiraT\AppData\Local\Temp\pytest-of-VieiraT\pytest-3\test_save_revenue_insights_csv0\revenue_insights in CSV format
+2026-10-12 10:10:39,270 - src.data_export - INFO - Saving store_id-level revenue insights to C:\Users\VieiraT\AppData\Local\Temp\pytest-of-VieiraT\pytest-3\test_save_revenue_insights_csv0\revenue_insights in CSV format
+2026-10-12 10:10:45,442 - src.data_preparation - INFO - Loading data from C:\Users\VieiraT\AppData\Local\Temp\pytest-of-VieiraT\pytest-3\test_load_data_reads_csv_with_0\sales.csv
+2026-10-12 10:10:49,711 - src.data_preparation - INFO - Checking for missing values in table test_table
+2026-10-12 10:10:51,702 - src.data_preparation - INFO - Missing values:
+[Row(col1=1, col2=2, col3=1)]
+2026-10-12 10:10:53,711 - src.data_preparation - INFO - Checking for format inconsistencies in table test_table
+2026-10-12 10:10:53,711 - src.data_preparation - INFO - Checking for empty strings in column name
+2026-10-12 10:10:53,718 - src.data_preparation - INFO - Checking raw dates in column event_date against output format: yyyy-MM-dd
+2026-10-12 10:10:53,734 - src.data_preparation - INFO - Checking for invalid integer values in column quantity
+2026-10-12 10:10:53,766 - src.data_preparation - INFO - Checking for invalid float values in column price
+2026-10-12 10:10:55,846 - src.data_preparation - INFO - Format inconsistencies:
+[Row(name=2, event_date=3, quantity=2, price=2)]
+2026-10-12 10:10:57,795 - src.data_preparation - INFO - Handling duplicates in table sales
+2026-10-12 10:11:01,662 - src.data_preparation - INFO - Dropped 1 duplicate rows from table sales
+2026-10-12 10:11:07,622 - src.data_preparation - INFO - Handling duplicates in table test_table
+2026-10-12 10:11:11,457 - src.data_preparation - INFO - Dropped 1 duplicate rows from table test_table
+2026-10-12 10:11:17,431 - src.data_preparation - INFO - Enforcing not_null constraint on column value
+2026-10-12 10:11:24,949 - src.data_preparation - INFO - Enforcing not_empty constraint on column value
+2026-10-12 10:11:33,163 - src.data_preparation - INFO - Enforcing min constraint on column value: 1
+2026-10-12 10:11:41,383 - src.data_preparation - INFO - Enforcing data types for table sales
+2026-10-12 10:11:41,383 - src.data_preparation - INFO - Enforcing data type for column transaction_id: string
+2026-10-12 10:11:41,391 - src.data_preparation - INFO - Enforcing not_null constraint on column transaction_id
+2026-10-12 10:11:41,395 - src.data_preparation - INFO - Enforcing not_empty constraint on column transaction_id
+2026-10-12 10:11:41,403 - src.data_preparation - INFO - Enforcing data type for column quantity: integer
+2026-10-12 10:11:41,409 - src.data_preparation - INFO - Enforcing not_null constraint on column quantity
+2026-10-12 10:11:41,412 - src.data_preparation - INFO - Enforcing min constraint on column quantity: 1
+2026-10-12 10:11:41,417 - src.data_preparation - INFO - Enforcing data type for column transaction_date: date
+2026-10-12 10:11:41,418 - src.data_preparation - INFO - Parsing date column transaction_date using formats: ['yyyy-MM-dd', 'yyyy/MM/dd']
+2026-10-12 10:11:41,435 - src.data_preparation - DEBUG - Schema after enforcing data type for column transaction_date: StructType([StructField('transaction_id', StringType(), True), StructField('quantity', IntegerType(), True), StructField('transaction_date', DateType(), True), StructField('price', StringType(), True)])
+2026-10-12 10:11:41,435 - src.data_preparation - INFO - Enforcing not_null constraint on column transaction_date
+2026-10-12 10:11:41,439 - src.data_preparation - INFO - Enforcing data type for column price: float
+2026-10-12 10:11:41,443 - src.data_preparation - INFO - Enforcing not_null constraint on column price
+2026-10-12 10:11:41,449 - src.data_preparation - INFO - Enforcing min constraint on column price: 0.0
+2026-10-12 10:11:49,785 - src.data_transformation - INFO - Calculating total revenue for each store and product category
+2026-10-12 10:11:57,956 - src.data_transformation - INFO - Calculating total quantity sold for each product category, grouped by month
+2026-10-12 10:12:06,706 - src.data_transformation - INFO - Enriching data by combining sales, products, and stores datasets
+2026-10-12 10:12:17,727 - src.data_transformation - INFO - Adding price category to the enriched dataset
+2026-10-12 10:35:13,276 - src.pipeline - INFO - Processing table: sales
+2026-10-12 10:35:13,276 - src.data_preparation - INFO - Loading data from data/sales_uuid.csv
+2026-10-12 10:35:17,675 - src.data_preparation - INFO - Checking for missing values in table sales
+2026-10-12 10:35:18,527 - src.data_preparation - INFO - Missing values:
+[Row(transaction_id=0, store_id=0, product_id=0, quantity=0, transaction_date=0, price=0)]
+2026-10-12 10:35:18,527 - src.data_preparation - INFO - Checking for format inconsistencies in table sales
+2026-10-12 10:35:18,527 - src.data_preparation - INFO - Checking for empty strings in column transaction_id
+2026-10-12 10:35:18,533 - src.data_preparation - INFO - Checking for empty strings in column store_id
+2026-10-12 10:35:18,537 - src.data_preparation - INFO - Checking for empty strings in column product_id
+2026-10-12 10:35:18,542 - src.data_preparation - INFO - Checking for invalid integer values in column quantity
+2026-10-12 10:35:18,577 - src.data_preparation - INFO - Checking raw dates in column transaction_date against output format: yyyy-MM-dd
+2026-10-12 10:35:18,597 - src.data_preparation - INFO - Checking for invalid float values in column price
+2026-10-12 10:35:19,015 - src.data_preparation - INFO - Format inconsistencies:
+[Row(transaction_id=0, store_id=0, product_id=0, quantity=0, transaction_date=160, price=0)]
+2026-10-12 10:35:19,015 - src.data_preparation - INFO - Enforcing data types for table sales
+2026-10-12 10:35:19,015 - src.data_preparation - INFO - Enforcing data type for column transaction_id: string
+2026-10-12 10:35:19,027 - src.data_preparation - INFO - Enforcing not_null constraint on column transaction_id
+2026-10-12 10:35:19,034 - src.data_preparation - INFO - Enforcing not_empty constraint on column transaction_id
+2026-10-12 10:35:19,041 - src.data_preparation - INFO - Enforcing data type for column store_id: string
+2026-10-12 10:35:19,050 - src.data_preparation - INFO - Enforcing not_null constraint on column store_id
+2026-10-12 10:35:19,056 - src.data_preparation - INFO - Enforcing not_empty constraint on column store_id
+2026-10-12 10:35:19,066 - src.data_preparation - INFO - Enforcing data type for column product_id: string
+2026-10-12 10:35:19,075 - src.data_preparation - INFO - Enforcing not_null constraint on column product_id
+2026-10-12 10:35:19,081 - src.data_preparation - INFO - Enforcing not_empty constraint on column product_id
+2026-10-12 10:35:19,090 - src.data_preparation - INFO - Enforcing data type for column quantity: integer
+2026-10-12 10:35:19,102 - src.data_preparation - INFO - Enforcing not_null constraint on column quantity
+2026-10-12 10:35:19,108 - src.data_preparation - INFO - Enforcing min constraint on column quantity: 1
+2026-10-12 10:35:19,115 - src.data_preparation - INFO - Enforcing data type for column transaction_date: date
+2026-10-12 10:35:19,115 - src.data_preparation - INFO - Parsing date column transaction_date using formats: ['yyyy-MM-dd', 'yyyy/MM/dd', 'M/d/yyyy', 'dd-MM-yyyy', 'MMMM d, yyyy', 'd-MMM-yy']
+2026-10-12 10:35:19,159 - src.data_preparation - DEBUG - Schema after enforcing data type for column transaction_date: StructType([StructField('transaction_id', StringType(), True), StructField('store_id', StringType(), True), StructField('product_id', StringType(), True), StructField('quantity', IntegerType(), True), StructField('transaction_date', DateType(), True), StructField('price', StringType(), True)])
+2026-10-12 10:35:19,159 - src.data_preparation - INFO - Enforcing not_null constraint on column transaction_date
+2026-10-12 10:35:19,166 - src.data_preparation - INFO - Enforcing data type for column price: float
+2026-10-12 10:35:19,175 - src.data_preparation - INFO - Enforcing not_null constraint on column price
+2026-10-12 10:35:19,181 - src.data_preparation - INFO - Enforcing min constraint on column price: 0.0
+2026-10-12 10:35:19,195 - src.data_preparation - INFO - Handling duplicates in table sales
+2026-10-12 10:35:22,018 - src.data_preparation - INFO - Dropped 0 duplicate rows from table sales
+2026-10-12 10:35:22,018 - src.pipeline - INFO - Processing table: products
+2026-10-12 10:35:22,018 - src.data_preparation - INFO - Loading data from data/products_uuid.csv
+2026-10-12 10:35:22,176 - src.data_preparation - INFO - Checking for missing values in table products
+2026-10-12 10:35:22,398 - src.data_preparation - INFO - Missing values:
+[Row(product_id=0, product_name=0, category=0)]
+2026-10-12 10:35:22,398 - src.data_preparation - INFO - Checking for format inconsistencies in table products
+2026-10-12 10:35:22,398 - src.data_preparation - INFO - Checking for empty strings in column product_id
+2026-10-12 10:35:22,405 - src.data_preparation - INFO - Checking for empty strings in column product_name
+2026-10-12 10:35:22,409 - src.data_preparation - INFO - Checking for empty strings in column category
+2026-10-12 10:35:22,575 - src.data_preparation - INFO - Format inconsistencies:
+[Row(product_id=0, product_name=0, category=0)]
+2026-10-12 10:35:22,575 - src.data_preparation - INFO - Enforcing data types for table products
+2026-10-12 10:35:22,575 - src.data_preparation - INFO - Enforcing data type for column product_id: string
+2026-10-12 10:35:22,585 - src.data_preparation - INFO - Enforcing not_null constraint on column product_id
+2026-10-12 10:35:22,590 - src.data_preparation - INFO - Enforcing not_empty constraint on column product_id
+2026-10-12 10:35:22,597 - src.data_preparation - INFO - Enforcing data type for column product_name: string
+2026-10-12 10:35:22,605 - src.data_preparation - INFO - Enforcing data type for column category: string
+2026-10-12 10:35:22,613 - src.data_preparation - INFO - Handling duplicates in table products
+2026-10-12 10:35:23,548 - src.data_preparation - INFO - Dropped 0 duplicate rows from table products
+2026-10-12 10:35:23,548 - src.pipeline - INFO - Processing table: stores
+2026-10-12 10:35:23,548 - src.data_preparation - INFO - Loading data from data/stores_uuid.csv
+2026-10-12 10:35:23,710 - src.data_preparation - INFO - Checking for missing values in table stores
+2026-10-12 10:35:23,839 - src.data_preparation - INFO - Missing values:
+[Row(store_id=0, store_name=0, location=0)]
+2026-10-12 10:35:23,839 - src.data_preparation - INFO - Checking for format inconsistencies in table stores
+2026-10-12 10:35:23,839 - src.data_preparation - INFO - Checking for empty strings in column store_id
+2026-10-12 10:35:23,844 - src.data_preparation - INFO - Checking for empty strings in column store_name
+2026-10-12 10:35:23,848 - src.data_preparation - INFO - Checking for empty strings in column location
+2026-10-12 10:35:23,952 - src.data_preparation - INFO - Format inconsistencies:
+[Row(store_id=0, store_name=0, location=0)]
+2026-10-12 10:35:23,952 - src.data_preparation - INFO - Enforcing data types for table stores
+2026-10-12 10:35:23,952 - src.data_preparation - INFO - Enforcing data type for column store_id: string
+2026-10-12 10:35:23,960 - src.data_preparation - INFO - Enforcing not_null constraint on column store_id
+2026-10-12 10:35:23,965 - src.data_preparation - INFO - Enforcing not_empty constraint on column store_id
+2026-10-12 10:35:23,973 - src.data_preparation - INFO - Enforcing data type for column store_name: string
+2026-10-12 10:35:23,979 - src.data_preparation - INFO - Enforcing data type for column location: string
+2026-10-12 10:35:23,986 - src.data_preparation - INFO - Handling duplicates in table stores
+2026-10-12 10:35:24,496 - src.data_preparation - INFO - Dropped 0 duplicate rows from table stores
+2026-10-12 10:35:24,496 - src.data_transformation - INFO - Calculating total revenue for each store and product category
+2026-10-12 10:35:24,579 - src.data_transformation - INFO - Calculating total quantity sold for each product category, grouped by month
+2026-10-12 10:35:24,612 - src.data_transformation - INFO - Enriching data by combining sales, products, and stores datasets
+2026-10-12 10:35:24,644 - src.data_transformation - INFO - Adding price category to the enriched dataset
+2026-10-12 10:35:24,672 - src.data_export - INFO - Saving enriched dataset to output/enriched_data in Parquet format, partitioned by category and transaction_date
+2026-10-12 10:35:32,196 - src.data_export - INFO - Successfully wrote enriched dataset to output/enriched_data
+2026-10-12 10:35:32,197 - src.data_export - INFO - Saving store_id-level revenue insights to output/revenue_insights in CSV format
+2026-10-12 10:35:37,627 - src.data_export - INFO - Saving enriched dataset to output/enriched_data_with_price_category in Parquet format, partitioned by category and transaction_date
+2026-10-12 10:35:42,600 - src.data_export - INFO - Successfully wrote enriched dataset to output/enriched_data_with_price_category
+2026-10-12 10:35:42,600 - __main__ - INFO - Data processing pipeline completed successfully

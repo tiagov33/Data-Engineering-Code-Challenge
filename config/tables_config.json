@@ -1,0 +1,114 @@
+{
+    "sales": {
+        "table_name": "sales",
+        "format": "csv",
+        "path": "data/sales_uuid.csv",
+        "primary_keys": ["transaction_id"],
+        "columns": {
+            "transaction_id": {
+                "type": "string",
+                "description": "Unique identifier for the transaction",
+                "constraints": {
+                    "not_null": true,
+                    "not_empty": true
+                }
+            },
+            "store_id": {
+                "type": "string",
+                "description": "ID of the store where the transaction occurred",
+                "constraints": {
+                    "not_null": true,
+                    "not_empty": true
+                }
+            },
+            "product_id": {
+                "type": "string",
+                "description": "ID of the product sold",
+                "constraints": {
+                    "not_null": true,
+                    "not_empty": true
+                }
+            },
+            "quantity": {
+                "type": "integer",
+                "description": "Number of units sold",
+                "constraints": {
+                    "not_null": true,
+                    "min": 1
+                }
+            },
+            "transaction_date": {
+                "type": "date",
+                "description": "date of the transaction",
+                "input_formats": [  
+                    "yyyy-MM-dd",  
+                    "yyyy/MM/dd",  
+                    "M/d/yyyy",  
+                    "dd-MM-yyyy",  
+                    "MMMM d, yyyy",  
+                    "d-MMM-yy"  
+                ],  
+                "output_format": "yyyy-MM-dd",
+                "constraints": {
+                    "not_null": true
+                }
+            },
+            "price": {
+                "type": "float",
+                "description": "Price per unit",
+                "constraints": {
+                    "not_null": true,
+                    "min": 0.0
+                }
+            }
+        }
+    },
+    "products": {
+        "table_name": "products",
+        "format": "csv",
+        "path": "data/products_uuid.csv",
+        "primary_keys": ["product_id"],
+        "columns": {
+            "product_id": {
+                "type": "string",
+                "description": "Unique identifier for the product",
+                "constraints": {
+                    "not_null": true,
+                    "not_empty": true
+                }
+            },
+            "product_name": {
+                "type": "string",
+                "description": "Name of the product"
+            },
+            "category": {
+                "type": "string",
+                "description": "Category of the product"
+            }
+        }
+    },
+    "stores": {
+        "table_name": "stores",
+        "format": "csv",
+        "path": "data/stores_uuid.csv",
+        "primary_keys": ["store_id"],
+        "columns": {
+            "store_id": {
+                "type": "string",
+                "description": "Unique identifier for the store",
+                "constraints":{
+                    "not_null": true,
+                    "not_empty": true
+                } 
+            },
+            "store_name": {
+                "type": "string",
+                "description": "Name of the store" 
+            },
+            "location": {
+                "type": "string",
+                "description": "Location of the store" 
+            }
+        }
+    }
+}

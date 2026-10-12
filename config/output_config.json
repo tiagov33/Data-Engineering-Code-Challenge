@@ -1,0 +1,14 @@
+{
+    "enriched_data": {
+        "path": "output/enriched_data",
+        "format": "parquet"
+    },
+    "revenue_insights": {
+        "path": "output/revenue_insights",
+        "format": "csv"
+    },
+    "enriched_data_with_price_category": {
+        "path": "output/enriched_data_with_price_category",
+        "format": "parquet"
+}
+}
