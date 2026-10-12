@@ -40,7 +40,12 @@ Transaction dates are expected in `YYYY-MM-DD` format.
 │   ├── utils.py  
 │   └── README.md  
 ├── tests/  
-│   └── ...  
+│   ├── __init__.py  
+│   ├── conftest.py  
+│   ├── README.md  
+│   ├── test_data_export.py  
+│   ├── test_data_preparation.py  
+│   └── test_data_transformation.py
 ├── logs/                       # Generated application logs  
 ├── output/                     # Generated output datasets  
 ├── .gitignore  
