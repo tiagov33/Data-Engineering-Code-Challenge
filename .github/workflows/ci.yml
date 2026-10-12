@@ -48,7 +48,7 @@ jobs:
             src/data_preparation.py \  
             src/data_transformation.py \  
             src/data_export.py \  
-            main.py  
+            main.py
   
       - name: Run tests  
-        run: python -m pytest tests/ -v  
+        run: python -m pytest tests/ -v
