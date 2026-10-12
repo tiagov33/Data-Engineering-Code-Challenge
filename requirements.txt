@@ -1,0 +1,6 @@
+# Data processing  
+pyspark>=3.5  
+  
+# Testing  
+pytest  
+chispa
