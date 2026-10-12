@@ -43,12 +43,7 @@ jobs:
           touch logs/app.log  
   
       - name: Run linting  
-        run: |  
-          python -m pylint \  
-            src/data_preparation.py \  
-            src/data_transformation.py \  
-            src/data_export.py \  
-            main.py
+        run: python -m pylint src/data_preparation.py src/data_transformation.py src/data_export.py main.py  
   
       - name: Run tests  
         run: python -m pytest tests/ -v
