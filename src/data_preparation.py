@@ -16,10 +16,10 @@ with duplicate primary keys.
 """
 
 from pyspark.sql import SparkSession, DataFrame, functions as F
-from pyspark.sql.functions import (
-    col, when, count, length, to_date,
-    coalesce, lit, try_to_timestamp, trim
-)
+# from pyspark.sql.functions import (
+#     col, when, count, length, to_date,
+#     coalesce, lit, try_to_timestamp, trim
+# )
 from src.utils import get_logger
 
 logger = get_logger(__name__)
@@ -61,7 +61,13 @@ def check_missing_values(df: DataFrame, config: dict) -> DataFrame:
         logger.info("Checking for missing values in table %s", config['table_name'])
 
         missing_values = df.select(
-            [count(when(col(c).isNull(), lit(1))).alias(c) for c in df.columns])
+            [
+                F.count(
+                    F.when(F.col(c).isNull(), F.lit(1))
+                ).alias(c)
+                for c in df.columns
+            ]
+        )
 
         logger.info("Missing values:\n%s", missing_values.collect())
         return missing_values
@@ -87,10 +93,10 @@ def check_format_inconsistencies(df: DataFrame, config: dict) -> DataFrame:
             if metadata['type'] == 'string':
                 logger.info("Checking for empty strings in column %s", column)
                 format_inconsistencies.append(
-                    count(
-                        when(
-                            length(trim(col(column))) == 0,
-                            lit(1),
+                    F.count(
+                        F.when(
+                            F.length(F.trim(F.col(column))) == 0,
+                            F.lit(1),
                         )
                     ).alias(column)
                 )
@@ -230,13 +236,15 @@ def enforce_constraints(df: DataFrame, column: str, constraints: dict) -> DataFr
     try:
         if 'not_null' in constraints and constraints['not_null']:
             logger.info("Enforcing not_null constraint on column %s", column)
-            df = df.filter(col(column).isNotNull())
+            df = df.filter(F.col(column).isNotNull())
+
         if 'not_empty' in constraints and constraints['not_empty']:
             logger.info("Enforcing not_empty constraint on column %s", column)
-            df = df.filter(length(trim(col(column))) > 0)
+            df = df.filter(F.length(F.trim(F.col(column))) > 0)
+
         if 'min' in constraints:
             logger.info("Enforcing min constraint on column %s: %s", column, constraints['min'])
-            df = df.filter(col(column) >= constraints['min'])
+            df = df.filter(F.col(column) >= constraints['min'])
         return df
     except Exception as e:
         logger.error("Error enforcing constraints on column %s: %s", column, e)
@@ -264,16 +272,16 @@ def enforce_data_types(df: DataFrame, config: dict) -> DataFrame:
                 logger.info("Parsing date column %s using formats: %s", column, input_formats)
 
                 parsed_dates = [
-                    to_date(
-                        try_to_timestamp(
-                            trim(col(column)),
-                            lit(date_format),
+                    F.to_date(
+                        F.try_to_timestamp(
+                            F.trim(F.col(column)),
+                            F.lit(date_format),
                         )
                     )
                     for date_format in input_formats
                 ]
 
-                df = df.withColumn(column, coalesce(*parsed_dates))
+                df = df.withColumn(column, F.coalesce(*parsed_dates))
                 logger.debug(
                     "Schema after enforcing data type for column %s: %s", 
                     column, df.schema
@@ -284,7 +292,7 @@ def enforce_data_types(df: DataFrame, config: dict) -> DataFrame:
                     F.expr(f"try_cast({column} AS {data_type})"),
                 )
             else:
-                df = df.withColumn(column, col(column).cast(data_type))
+                df = df.withColumn(column, F.col(column).cast(data_type))
             if 'constraints' in metadata:
                 df = enforce_constraints(df, column, metadata['constraints'])
         return df
