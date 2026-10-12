@@ -74,7 +74,20 @@ For example, sales transaction dates are expected in `YYYY-MM-DD` format.
   
 #### `handle_duplicates(df: DataFrame, config: dict) -> DataFrame`  
   
-Removes duplicate records based on the configured primary-key columns.  
+Removes exact duplicate rows, then validates uniqueness using the configured  
+primary-key columns.
+
+Duplicate handling follows these rules:  
+  
+- **Exact duplicates:** rows with identical values across all columns are  
+  reduced to one row.  
+- **Conflicting records:** rows sharing the same primary key but containing  
+  different values raise `ValueError`. The function does not arbitrarily  
+  choose a record to keep.
+- **Composite primary keys:** uniqueness is checked using the complete  
+  combination of configured key columns.  
+- **Invalid key configuration:** an empty primary-key list or primary-key  
+  columns missing from the DataFrame raises `ValueError`. 
   
 #### `enforce_constraints(df: DataFrame, column: str, constraints: dict) -> DataFrame`  
   
@@ -103,7 +116,7 @@ Its responsibilities include:
 - Loading the dataset.  
 - Checking missing values.  
 - Checking format inconsistencies.  
-- Handling duplicates.  
+- Removing exact duplicates and rejecting conflicting primary-key records. 
 - Enforcing data types and constraints.  
   
 The returned DataFrame is passed to the transformation stage.  
