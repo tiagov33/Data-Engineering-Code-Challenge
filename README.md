@@ -147,11 +147,19 @@ See [`config/README.md`](config/README.md) for configuration details.
   
 ## Run the Pipeline  
   
-With the virtual environment activated:  
+From the project root, with the virtual environment activated:  
   
-```bash  
-python main.py  
-```  
+1. Install the required dependencies:  
+  
+   ```bash  
+   python -m pip install -r requirements.txt  
+   ```  
+  
+2. Run the pipeline:  
+  
+   ```bash  
+   python main.py  
+   ```
 
 ## Outputs  
   
