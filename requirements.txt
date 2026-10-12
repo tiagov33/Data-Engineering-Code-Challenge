@@ -4,3 +4,6 @@ pyspark==3.5.5
 # Testing  
 pytest==8.3.5  
 chispa==0.10.1
+
+# Linting
+pylint==3.3.6
