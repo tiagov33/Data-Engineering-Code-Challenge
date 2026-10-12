@@ -16,10 +16,6 @@ with duplicate primary keys.
 """
 
 from pyspark.sql import SparkSession, DataFrame, functions as F
-# from pyspark.sql.functions import (
-#     col, when, count, length, to_date,
-#     coalesce, lit, try_to_timestamp, trim
-# )
 from src.utils import get_logger
 
 logger = get_logger(__name__)
