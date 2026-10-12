@@ -40,7 +40,7 @@ def load_data(spark: SparkSession, config: dict) -> DataFrame:
         df = spark.read.format(config['format']).option("header", "true").load(config['path'])
         return df
     except FileNotFoundError as e:
-        logger.error("Configuration file not found: %s - %s", config['path'], e)
+        logger.error("Input data file not found: %s - %s", config['path'], e)
         raise
     except Exception as e:
         logger.error("Unexpected error loading data from %s: %s", config['path'], e)
@@ -169,16 +169,48 @@ def handle_duplicates(df: DataFrame, config: dict) -> DataFrame:
         DataFrame: The DataFrame with duplicates removed.
     """
     try:
-        logger.info("Handling duplicates in table %s", config['table_name'])
+        table_name = config["table_name"]
+        primary_keys = config["primary_keys"]
+
+        if not primary_keys:
+            raise ValueError(f"No primary keys configured for {table_name}")
+
+        missing_columns = set(primary_keys) - set(df.columns)
+        if missing_columns:
+            raise ValueError(
+                f"Missing primary-key columns in {table_name}: "
+                f"{sorted(missing_columns)}"
+            )
+
+        logger.info("Handling duplicates in table %s", table_name)
+
         initial_count = df.count()
-        df = df.drop_duplicates(subset=config['primary_keys'])
-        final_count = df.count()
-        duplicates_dropped = initial_count - final_count
+        deduplicated_df = df.dropDuplicates()
+        final_count = deduplicated_df.count()
+
         logger.info(
-            "Dropped %d duplicate rows from table %s", 
-            duplicates_dropped, config['table_name']
+            "Removed %d exact duplicate rows from table %s",
+            initial_count - final_count,
+            table_name,
         )
-        return df
+
+        conflicting_keys = (
+            deduplicated_df.groupBy(*primary_keys)
+            .count()
+            .filter(F.col("count") > 1)
+        )
+
+        if conflicting_keys.limit(1).count() > 0:
+            logger.error(
+                "Conflicting records found for primary keys %s in table %s",
+                primary_keys,
+                table_name,
+            )
+            raise ValueError(
+                f"Conflicting records share primary keys in {table_name}"
+            )
+
+        return deduplicated_df
     except Exception as e:
         logger.error("Error handling duplicates in table %s: %s", config['table_name'], e)
         raise
@@ -240,7 +272,7 @@ def enforce_data_types(df: DataFrame, config: dict) -> DataFrame:
                     )
                     for date_format in input_formats
                 ]
-                # date_columns = [to_date(col(column), fmt) for fmt in KNOWN_DATE_FORMATS]
+
                 df = df.withColumn(column, coalesce(*parsed_dates))
                 logger.debug(
                     "Schema after enforcing data type for column %s: %s", 

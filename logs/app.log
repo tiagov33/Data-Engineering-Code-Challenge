@@ -280,3 +280,49 @@
 2026-10-12 10:35:37,627 - src.data_export - INFO - Saving enriched dataset to output/enriched_data_with_price_category in Parquet format, partitioned by category and transaction_date
 2026-10-12 10:35:42,600 - src.data_export - INFO - Successfully wrote enriched dataset to output/enriched_data_with_price_category
 2026-10-12 10:35:42,600 - __main__ - INFO - Data processing pipeline completed successfully
+2026-10-12 11:27:01,917 - src.data_preparation - INFO - Loading data from C:\Users\VieiraT\AppData\Local\Temp\pytest-of-VieiraT\pytest-4\test_load_data_reads_csv_with_0\sales.csv
+2026-10-12 11:27:13,126 - src.data_preparation - INFO - Checking for missing values in table test_table
+2026-10-12 11:27:15,161 - src.data_preparation - INFO - Missing values:
+[Row(col1=1, col2=2, col3=1)]
+2026-10-12 11:27:17,098 - src.data_preparation - INFO - Checking for format inconsistencies in table test_table
+2026-10-12 11:27:17,098 - src.data_preparation - INFO - Checking for empty strings in column name
+2026-10-12 11:27:17,108 - src.data_preparation - INFO - Checking raw dates in column event_date against output format: yyyy-MM-dd
+2026-10-12 11:27:17,128 - src.data_preparation - INFO - Checking for invalid integer values in column quantity
+2026-10-12 11:27:17,160 - src.data_preparation - INFO - Checking for invalid float values in column price
+2026-10-12 11:27:19,201 - src.data_preparation - INFO - Format inconsistencies:
+[Row(name=2, event_date=3, quantity=2, price=2)]
+2026-10-12 11:27:21,134 - src.data_preparation - INFO - Handling duplicates in table sales
+2026-10-12 11:27:24,953 - src.data_preparation - INFO - Removed 0 exact duplicate rows from table sales
+2026-10-12 11:27:32,651 - src.data_preparation - INFO - Handling duplicates in table sales
+2026-10-12 11:27:37,356 - src.data_preparation - INFO - Removed 2 exact duplicate rows from table sales
+2026-10-12 11:27:44,650 - src.data_preparation - INFO - Handling duplicates in table sales
+2026-10-12 11:27:48,761 - src.data_preparation - INFO - Removed 1 exact duplicate rows from table sales
+2026-10-12 11:27:50,926 - src.data_preparation - ERROR - Conflicting records found for primary keys ['transaction_id'] in table sales
+2026-10-12 11:27:50,926 - src.data_preparation - ERROR - Error handling duplicates in table sales: Conflicting records share primary keys in sales
+2026-10-12 11:27:50,967 - src.data_preparation - INFO - Handling duplicates in table test_table
+2026-10-12 11:27:54,690 - src.data_preparation - INFO - Removed 1 exact duplicate rows from table test_table
+2026-10-12 11:28:02,974 - src.data_preparation - INFO - Handling duplicates in table test_table
+2026-10-12 11:28:07,097 - src.data_preparation - INFO - Removed 0 exact duplicate rows from table test_table
+2026-10-12 11:28:09,161 - src.data_preparation - ERROR - Conflicting records found for primary keys ['store_id', 'product_id'] in table test_table
+2026-10-12 11:28:09,162 - src.data_preparation - ERROR - Error handling duplicates in table test_table: Conflicting records share primary keys in test_table
+2026-10-12 11:28:09,202 - src.data_preparation - ERROR - Error handling duplicates in table sales: No primary keys configured for sales
+2026-10-12 11:28:09,228 - src.data_preparation - ERROR - Error handling duplicates in table sales: Missing primary-key columns in sales: ['missing_id']
+2026-10-12 11:28:09,256 - src.data_preparation - INFO - Handling duplicates in table sales
+2026-10-12 11:28:13,782 - src.data_preparation - INFO - Removed 0 exact duplicate rows from table sales
+2026-10-12 11:28:21,227 - src.data_preparation - INFO - Enforcing not_null constraint on column value
+2026-10-12 11:28:28,653 - src.data_preparation - INFO - Enforcing not_empty constraint on column value
+2026-10-12 11:28:36,400 - src.data_preparation - INFO - Enforcing min constraint on column value: 1
+2026-10-12 11:28:44,602 - src.data_preparation - INFO - Enforcing data types for table sales
+2026-10-12 11:28:44,602 - src.data_preparation - INFO - Enforcing data type for column transaction_id: string
+2026-10-12 11:28:44,614 - src.data_preparation - INFO - Enforcing not_null constraint on column transaction_id
+2026-10-12 11:28:44,621 - src.data_preparation - INFO - Enforcing not_empty constraint on column transaction_id
+2026-10-12 11:28:44,632 - src.data_preparation - INFO - Enforcing data type for column quantity: integer
+2026-10-12 11:28:44,641 - src.data_preparation - INFO - Enforcing not_null constraint on column quantity
+2026-10-12 11:28:44,647 - src.data_preparation - INFO - Enforcing min constraint on column quantity: 1
+2026-10-12 11:28:44,654 - src.data_preparation - INFO - Enforcing data type for column transaction_date: date
+2026-10-12 11:28:44,655 - src.data_preparation - INFO - Parsing date column transaction_date using formats: ['yyyy-MM-dd', 'yyyy/MM/dd']
+2026-10-12 11:28:44,686 - src.data_preparation - DEBUG - Schema after enforcing data type for column transaction_date: StructType([StructField('transaction_id', StringType(), True), StructField('quantity', IntegerType(), True), StructField('transaction_date', DateType(), True), StructField('price', StringType(), True)])
+2026-10-12 11:28:44,687 - src.data_preparation - INFO - Enforcing not_null constraint on column transaction_date
+2026-10-12 11:28:44,693 - src.data_preparation - INFO - Enforcing data type for column price: float
+2026-10-12 11:28:44,702 - src.data_preparation - INFO - Enforcing not_null constraint on column price
+2026-10-12 11:28:44,708 - src.data_preparation - INFO - Enforcing min constraint on column price: 0.0

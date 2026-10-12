@@ -1,6 +1,6 @@
 """Tests for input loading, validation, and preparation."""  
   
-from datetime import date 
+from datetime import date  
   
 import pytest  
 from chispa.dataframe_comparer import assert_df_equality  
@@ -16,6 +16,7 @@ from src.data_preparation import (
   
   
 def test_load_data_reads_csv_with_header_as_strings(spark, tmp_path):  
+    """Load CSV headers and retain string types before type enforcement."""  
     input_path = tmp_path / "sales.csv"  
     input_path.write_text(  
         "transaction_id,quantity\nT1,2\nT2,3\n",  
@@ -40,6 +41,7 @@ def test_load_data_reads_csv_with_header_as_strings(spark, tmp_path):
   
   
 def test_check_missing_values_counts_nulls_not_blank_strings(spark):  
+    """Count null values separately from empty or whitespace-only strings."""  
     df = spark.createDataFrame(  
         [  
             ("1", None, ""),  
@@ -60,6 +62,7 @@ def test_check_missing_values_counts_nulls_not_blank_strings(spark):
   
   
 def test_check_format_inconsistencies_reports_invalid_values(spark):  
+    """Report invalid strings, dates, integers, and floating-point values."""  
     df = spark.createDataFrame(  
         [  
             ("Product", "2024-07-04", "2", "10.5"),  
@@ -92,10 +95,41 @@ def test_check_format_inconsistencies_reports_invalid_values(spark):
     assert_df_equality(actual, expected, ignore_nullable=True)  
   
   
-def test_handle_duplicates_removes_repeated_primary_keys(spark):  
+def test_handle_duplicates_preserves_unique_rows(spark):  
+    """Leave rows with distinct primary keys unchanged."""  
     df = spark.createDataFrame(  
-        [("T1", "P1"), ("T1", "P1"), ("T2", "P2")],  
-        "transaction_id string, product_id string",  
+        [  
+            ("T1", "P1", 2),  
+            ("T2", "P1", 2),  
+            ("T3", "P2", 3),  
+        ],  
+        "transaction_id string, product_id string, quantity int",  
+    )  
+    config = {  
+        "table_name": "sales",  
+        "primary_keys": ["transaction_id"],  
+    }  
+  
+    actual = handle_duplicates(df, config)  
+  
+    assert_df_equality(  
+        actual,  
+        df,  
+        ignore_nullable=True,  
+        ignore_row_order=True,  
+    )  
+  
+  
+def test_handle_duplicates_removes_exact_duplicate_rows(spark):  
+    """Remove fully identical records while preserving distinct records."""  
+    df = spark.createDataFrame(  
+        [  
+            ("T1", "P1", 2),  
+            ("T1", "P1", 2),  
+            ("T1", "P1", 2),  
+            ("T2", "P2", 3),  
+        ],  
+        "transaction_id string, product_id string, quantity int",  
     )  
     config = {  
         "table_name": "sales",  
@@ -104,7 +138,10 @@ def test_handle_duplicates_removes_repeated_primary_keys(spark):
   
     actual = handle_duplicates(df, config)  
     expected = spark.createDataFrame(  
-        [("T1", "P1"), ("T2", "P2")],  
+        [  
+            ("T1", "P1", 2),  
+            ("T2", "P2", 3),  
+        ],  
         df.schema,  
     )  
   
@@ -116,10 +153,39 @@ def test_handle_duplicates_removes_repeated_primary_keys(spark):
     )  
   
   
-def test_handle_duplicates_supports_composite_primary_keys(spark):  
+def test_handle_duplicates_rejects_conflicting_primary_keys(spark):  
+    """Reject records sharing a primary key but containing different data."""  
     df = spark.createDataFrame(  
-        [("S1", "P1"), ("S1", "P1"), ("S1", "P2"), ("S2", "P1")],  
-        "store_id string, product_id string",  
+        [  
+            ("T1", "P1", 2),  
+            ("T1", "P1", 2),  
+            ("T1", "P1", 5),  
+            ("T2", "P2", 3),  
+        ],  
+        "transaction_id string, product_id string, quantity int",  
+    )  
+    config = {  
+        "table_name": "sales",  
+        "primary_keys": ["transaction_id"],  
+    }  
+  
+    with pytest.raises(  
+        ValueError,  
+        match="Conflicting records share primary keys in sales",  
+    ):  
+        handle_duplicates(df, config)  
+  
+  
+def test_handle_duplicates_supports_composite_primary_keys(spark):  
+    """Check uniqueness using the complete composite key."""  
+    df = spark.createDataFrame(  
+        [  
+            ("S1", "P1", 2),  
+            ("S1", "P1", 2),  
+            ("S1", "P2", 3),  
+            ("S2", "P1", 4),  
+        ],  
+        "store_id string, product_id string, quantity int",  
     )  
     config = {  
         "table_name": "test_table",  
@@ -128,13 +194,98 @@ def test_handle_duplicates_supports_composite_primary_keys(spark):
   
     actual = handle_duplicates(df, config)  
     expected = spark.createDataFrame(  
-        [("S1", "P1"), ("S1", "P2"), ("S2", "P1")],  
+        [  
+            ("S1", "P1", 2),  
+            ("S1", "P2", 3),  
+            ("S2", "P1", 4),  
+        ],  
         df.schema,  
     )  
   
     assert_df_equality(  
         actual,  
         expected,  
+        ignore_nullable=True,  
+        ignore_row_order=True,  
+    )  
+  
+  
+def test_handle_duplicates_rejects_conflicting_composite_keys(spark):  
+    """Reject different records sharing every column of a composite key."""  
+    df = spark.createDataFrame(  
+        [  
+            ("S1", "P1", 2),  
+            ("S1", "P1", 5),  
+            ("S1", "P2", 3),  
+        ],  
+        "store_id string, product_id string, quantity int",  
+    )  
+    config = {  
+        "table_name": "test_table",  
+        "primary_keys": ["store_id", "product_id"],  
+    }  
+  
+    with pytest.raises(  
+        ValueError,  
+        match="Conflicting records share primary keys in test_table",  
+    ):  
+        handle_duplicates(df, config)  
+  
+  
+def test_handle_duplicates_rejects_empty_primary_key_configuration(spark):  
+    """Require at least one primary-key column."""  
+    df = spark.createDataFrame(  
+        [("T1", "P1")],  
+        "transaction_id string, product_id string",  
+    )  
+    config = {  
+        "table_name": "sales",  
+        "primary_keys": [],  
+    }  
+  
+    with pytest.raises(  
+        ValueError,  
+        match="No primary keys configured for sales",  
+    ):  
+        handle_duplicates(df, config)  
+  
+  
+def test_handle_duplicates_rejects_missing_primary_key_columns(spark):  
+    """Reject primary-key columns absent from the DataFrame."""  
+    df = spark.createDataFrame(  
+        [("T1", "P1")],  
+        "transaction_id string, product_id string",  
+    )  
+    config = {  
+        "table_name": "sales",  
+        "primary_keys": ["transaction_id", "missing_id"],  
+    }  
+  
+    with pytest.raises(  
+        ValueError,  
+        match="Missing primary-key columns in sales",  
+    ) as exc_info:  
+        handle_duplicates(df, config)  
+  
+    assert "missing_id" in str(exc_info.value)  
+  
+  
+def test_handle_duplicates_accepts_empty_dataframe(spark):  
+    """Return an empty DataFrame with its schema preserved."""  
+    df = spark.createDataFrame(  
+        [],  
+        "transaction_id string, product_id string, quantity int",  
+    )  
+    config = {  
+        "table_name": "sales",  
+        "primary_keys": ["transaction_id"],  
+    }  
+  
+    actual = handle_duplicates(df, config)  
+  
+    assert_df_equality(  
+        actual,  
+        df,  
         ignore_nullable=True,  
         ignore_row_order=True,  
     )  
@@ -167,6 +318,7 @@ def test_handle_duplicates_supports_composite_primary_keys(spark):
 def test_enforce_constraints(  
     spark, schema, values, constraints, expected_values  
 ):  
+    """Filter values that violate the configured column constraints."""  
     df = spark.createDataFrame(values, schema)  
   
     actual = enforce_constraints(df, "value", constraints)  
@@ -181,6 +333,7 @@ def test_enforce_constraints(
   
   
 def test_enforce_data_types_parses_values_and_filters_invalid_rows(spark):  
+    """Cast valid values and remove malformed or constraint-violating rows."""  
     df = spark.createDataFrame(  
         [  
             ("T1", "2", "2024-07-04", "10.5"),  
@@ -203,11 +356,17 @@ def test_enforce_data_types_parses_values_and_filters_invalid_rows(spark):
         "columns": {  
             "transaction_id": {  
                 "type": "string",  
-                "constraints": {"not_null": True, "not_empty": True},  
+                "constraints": {  
+                    "not_null": True,  
+                    "not_empty": True,  
+                },  
             },  
             "quantity": {  
                 "type": "integer",  
-                "constraints": {"not_null": True, "min": 1},  
+                "constraints": {  
+                    "not_null": True,  
+                    "min": 1,  
+                },  
             },  
             "transaction_date": {  
                 "type": "date",  
@@ -217,7 +376,10 @@ def test_enforce_data_types_parses_values_and_filters_invalid_rows(spark):
             },  
             "price": {  
                 "type": "float",  
-                "constraints": {"not_null": True, "min": 0.0},  
+                "constraints": {  
+                    "not_null": True,  
+                    "min": 0.0,  
+                },  
             },  
         },  
     }  
