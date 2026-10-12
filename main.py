@@ -41,12 +41,12 @@ def main() -> None:
         output_config = load_config("config/output_config.json")
 
         # Initialize Spark session and logger
-        spark = (  
-            SparkSession.builder  
-            .appName("DataPipeline")  
-            .config("spark.sql.legacy.timeParserPolicy", "CORRECTED")  
-            .getOrCreate()  
-        )  
+        spark = (
+            SparkSession.builder
+            .appName("DataPipeline")
+            .config("spark.sql.legacy.timeParserPolicy", "CORRECTED")
+            .getOrCreate()
+        )
 
         # Process tables
         sales_df = process_table(spark, config, "sales")
@@ -72,11 +72,12 @@ def main() -> None:
         save_revenue_insights(total_revenue_df, output_config["revenue_insights"]["path"])
 
         # Save enriched data with price category
-        save_enriched_data(enriched_df_with_price_categorized, output_config["enriched_data_with_price_category"]["path"])
+        save_enriched_data(enriched_df_with_price_categorized,
+                           output_config["enriched_data_with_price_category"]["path"])
 
         logger.info("Data processing pipeline completed successfully")
-    except Exception:  
-        logger.exception("Data processing pipeline failed")  
+    except Exception:
+        logger.exception("Data processing pipeline failed")
         raise
     finally:
         if spark is not None:
@@ -85,5 +86,5 @@ def main() -> None:
 if __name__ == "__main__":
     try:
         main()
-    except Exception:
+    except Exception: #pylint: disable=broad-except
         sys.exit(1)

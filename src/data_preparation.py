@@ -16,7 +16,10 @@ with duplicate primary keys.
 """
 
 from pyspark.sql import SparkSession, DataFrame, functions as F
-from pyspark.sql.functions import col, when, count, length, to_date, coalesce, lit, try_to_timestamp, trim
+from pyspark.sql.functions import (
+    col, when, count, length, to_date,
+    coalesce, lit, try_to_timestamp, trim
+)
 from src.utils import get_logger
 
 logger = get_logger(__name__)
@@ -56,8 +59,10 @@ def check_missing_values(df: DataFrame, config: dict) -> DataFrame:
     """
     try:
         logger.info("Checking for missing values in table %s", config['table_name'])
-        # missing_values = df.select([count(when(col(c).isNull(), c)).alias(c) for c in df.columns])
-        missing_values = df.select([count(when(col(c).isNull(), lit(1))).alias(c) for c in df.columns])
+
+        missing_values = df.select(
+            [count(when(col(c).isNull(), lit(1))).alias(c) for c in df.columns])
+
         logger.info("Missing values:\n%s", missing_values.collect())
         return missing_values
     except Exception as e:
@@ -82,65 +87,65 @@ def check_format_inconsistencies(df: DataFrame, config: dict) -> DataFrame:
             if metadata['type'] == 'string':
                 logger.info("Checking for empty strings in column %s", column)
                 format_inconsistencies.append(
-                    count(  
+                    count(
                         when(
-                            length(trim(col(column))) == 0,  
-                            lit(1),  
-                        )  
-                    ).alias(column)  
+                            length(trim(col(column))) == 0,
+                            lit(1),
+                        )
+                    ).alias(column)
                 )
             elif metadata['type'] == 'date':
                 expected_format = metadata['output_format']
-                logger.info(  
-                    "Checking raw dates in column %s against output format: %s",  
-                    column,  
-                    expected_format,  
-                )  
+                logger.info(
+                    "Checking raw dates in column %s against output format: %s",
+                    column,
+                    expected_format,
+                )
 
                 raw_value = F.col(column).cast("string")
 
-                parsed_date = F.to_date(  
-                    F.try_to_timestamp(  
-                        F.trim(raw_value),  
-                        F.lit(expected_format),  
-                    )  
-                )  
+                parsed_date = F.to_date(
+                    F.try_to_timestamp(
+                        F.trim(raw_value),
+                        F.lit(expected_format),
+                    )
+                )
 
                 formatted_date = F.date_format(parsed_date, expected_format)
 
-                inconsistent = (  
-                    raw_value.isNotNull()  
-                    & (  
-                        parsed_date.isNull()  
-                        | (raw_value != formatted_date)  
-                    )  
-                )  
+                inconsistent = (
+                    raw_value.isNotNull()
+                    & (
+                        parsed_date.isNull()
+                        | (raw_value != formatted_date)
+                    )
+                )
 
-                format_inconsistencies.append(  
-                    F.count(  
-                        F.when(inconsistent, F.lit(1))  
-                    ).alias(column)  
-                )  
+                format_inconsistencies.append(
+                    F.count(
+                        F.when(inconsistent, F.lit(1))
+                    ).alias(column)
+                )
             elif metadata["type"] in ("integer", "float"):
                 data_type = metadata["type"]
 
-                logger.info(  
-                    "Checking for invalid %s values in column %s",  
-                    data_type,  
-                    column,  
+                logger.info(
+                    "Checking for invalid %s values in column %s",
+                    data_type,
+                    column,
                 )
-            
-                parsed_value = F.expr(  
-                    f"try_cast({column} AS {data_type})"  
-                )  
-                        
-                format_inconsistencies.append(  
-                    F.count(  
+
+                parsed_value = F.expr(
+                    f"try_cast({column} AS {data_type})"
+                )
+
+                format_inconsistencies.append(
+                    F.count(
                         F.when(
                             F.col(column).isNotNull() & parsed_value.isNull(),
                             F.lit(1),
-                        ) 
-                    ).alias(column)  
+                        )
+                    ).alias(column)
                 )
         inconsistencies_df = df.select(format_inconsistencies)
         logger.info("Format inconsistencies:\n%s", inconsistencies_df.collect())
@@ -221,7 +226,7 @@ def enforce_data_types(df: DataFrame, config: dict) -> DataFrame:
         for column, metadata in config['columns'].items():
             data_type = metadata['type']
             logger.info("Enforcing data type for column %s: %s", column, data_type)
-            
+
             if data_type == 'date':
                 input_formats = metadata["input_formats"]
                 logger.info("Parsing date column %s using formats: %s", column, input_formats)
@@ -242,9 +247,9 @@ def enforce_data_types(df: DataFrame, config: dict) -> DataFrame:
                     column, df.schema
                 )
             elif data_type in ("integer", "float"):
-                df = df.withColumn(  
-                    column,  
-                    F.expr(f"try_cast({column} AS {data_type})"),  
+                df = df.withColumn(
+                    column,
+                    F.expr(f"try_cast({column} AS {data_type})"),
                 )
             else:
                 df = df.withColumn(column, col(column).cast(data_type))
