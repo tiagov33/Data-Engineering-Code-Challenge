@@ -28,9 +28,9 @@ Transaction dates are expected in `YYYY-MM-DD` format.
 │   ├── output_config.json  
 │   └── README.md  
 ├── data/  
-│   ├── sales.csv  
-│   ├── products.csv  
-│   └── stores.csv  
+│   ├── sales_uuid.csv  
+│   ├── products_uuid.csv  
+│   └── stores_uuid.csv  
 ├── src/  
 │   ├── __init__.py  
 │   ├── data_preparation.py  
